@@ -51,9 +51,10 @@ func mux(conn net.Conn, ln string) {
 	// request line
 	m := strings.Fields(ln)[0] // method
 	u := strings.Fields(ln)[1] // uri
+	z := strings.Fields(ln)[2] // http type
 	fmt.Println("***METHOD", m)
 	fmt.Println("***URI", u)
-
+	fmt.Println("***HTTP TYPE", z)
 	// multiplexer
 	if m == "GET" && u == "/" {
 		index(conn)
@@ -83,6 +84,7 @@ func index(conn net.Conn) {
 	fmt.Fprint(conn, "HTTP/1.1 200 OK\r\n")
 	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
 	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+
 	fmt.Fprint(conn, "\r\n")
 	fmt.Fprint(conn, body)
 }
